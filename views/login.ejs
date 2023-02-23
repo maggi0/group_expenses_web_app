@@ -1,0 +1,27 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Login</title>
+    <link href="/css/styles.css" rel="stylesheet" type="text/css">
+</head>
+<body>
+
+<h1>Login</h1>
+<% if (messages.error) { %>
+    <%= messages.error %>
+<% } %>
+<form action="/login" method ="POST">
+    <div>
+        <input type="email" id="email" placeholder="Enter email..." name="email" required>
+    </div>
+    <div>
+        <input type="password" id="password" placeholder="Enter password..." name="password" required>
+    </div>
+    <div>
+        <button type="submit">Login</button>
+        <button onclick="location.href='/register';">Go to register page</button>
+    </div>
+</form>
+</body>
+</html>

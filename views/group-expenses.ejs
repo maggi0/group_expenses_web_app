@@ -1,0 +1,81 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Group expenses</title>
+    <link href="/css/styles.css" rel="stylesheet" type="text/css">
+    <script type="text/javascript" src="/js/scripts.js"></script>
+</head>
+<body>
+<div id="main-menu">
+    <% group_expenses.forEach(function (group_expense) { %>
+    <div>
+        <button onclick="showGroupExpense('<%= encodeURIComponent(JSON.stringify(group_expense)) %>')"><%= group_expense.name %></button>
+    </div>
+    <% }) %>
+    <div>
+        <button onclick="showForm('addGroupExpenseForm')">Add a new group expense</button>
+        <form id="addGroupExpenseForm" style="display: none;" action="/add-group-expense" method="POST">
+            <div>
+                <input type="text" id="name" placeholder="Enter name..." name="name" required>
+            </div>
+            <div>
+                <button type="submit">Create group expense</button>
+                <button onclick="hideForm('addGroupExpenseForm')">Cancel</button>
+            </div>
+        </form>
+    </div>
+    <div>
+        <button onclick="showForm('deleteGroupExpenseForm')">Delete a group expense</button>
+        <form id="deleteGroupExpenseForm" style="display: none;" action="/delete-group-expense?_method=DELETE" method="POST">
+            <div>
+                <input type="text" id="name" placeholder="Enter name..." name="name" required>
+            </div>
+            <div>
+                <button type="submit">Delete</button>
+                <button onclick="hideForm('deleteGroupExpenseForm')">Cancel</button>
+            </div>
+        </form>
+    </div>
+</div>
+<div id="group-expense-info"></div>
+<div id="group-expense-menu" style="display: none">
+    <div>
+        <button onclick="showForm('addUser')">Add a new user</button>
+        <form id="addUser" style="display: none;" action="/add-user" method="POST">
+            <div>
+                <input type="email" id="name" placeholder="Enter email of user.." name="email" required>
+            </div>
+            <div>
+                <button type="submit">Add user</button>
+                <button onclick="hideForm('addUser')">Cancel</button>
+            </div>
+        </form>
+    </div>
+    <div>
+        <button onclick="showForm('addTransaction')">Add a new transaction</button>
+        <form id="addTransaction" style="display: none;" action="/add-transaction" method="POST">
+            <div>
+                <input type="text" id="people" placeholder="Enter people participating in transaction.." name="people" required>
+            </div>
+            <div>
+                <input type="text" id="name" placeholder="Enter name of transaction.." name="name" required>
+            </div>
+            <div>
+                <input type="text" id="cost" placeholder="Enter cost of transaction.." name="cost" required>
+            </div>
+            <div>
+                <input type="text" id="lender" placeholder="Enter who paid for the transaction.." name="lender" required>
+            </div>
+            <div>
+                <button type="submit">Add transaction</button>
+                <button onclick="hideForm('addTransaction')">Cancel</button>
+            </div>
+        </form>
+    </div>
+    <div>
+        <button onclick="location.href='/group-expenses';">Exit</button>
+    </div>
+</div>
+</body>
+</html>

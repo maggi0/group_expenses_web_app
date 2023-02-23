@@ -1,0 +1,16 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Home</title>
+    <link href="/css/styles.css" rel="stylesheet" type="text/css">
+</head>
+<body>
+
+<h1>Hi <%= name %>!</h1>
+<button onclick="location.href='/group-expenses';">See your group expenses</button>
+<form action="/logout?_method=DELETE" method="POST">
+    <button type="submit">Log out</button>
+</form>
+</body>
+</html>
