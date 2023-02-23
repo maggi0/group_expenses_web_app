@@ -15,6 +15,8 @@ window.showGroupExpense = function showGroupExpense(group_expense) {
     group_expense = JSON.parse(decodeURIComponent(group_expense));
     updateForm(group_expense._id, "addUser");
     updateForm(group_expense._id, "addTransaction");
+    updateForm(group_expense._id, "deleteUser");
+    updateForm(group_expense._id, "deleteTransaction");
     document.getElementById("main-menu").style.display = "none";
     document.getElementById("group-expense-menu").style.display = "";
     addInfo("Name: " + group_expense.name);

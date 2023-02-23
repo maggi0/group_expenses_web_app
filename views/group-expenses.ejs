@@ -37,6 +37,9 @@
             </div>
         </form>
     </div>
+        <div>
+            <button onclick="location.href='/';">Go to home page</button>
+        </div>
 </div>
 <div id="group-expense-info"></div>
 <div id="group-expense-menu" style="display: none">
@@ -70,6 +73,30 @@
             <div>
                 <button type="submit">Add transaction</button>
                 <button onclick="hideForm('addTransaction')">Cancel</button>
+            </div>
+        </form>
+    </div>
+    <div>
+        <button onclick="showForm('deleteUser')">Delete a user</button>
+        <form id="deleteUser" style="display: none;" action="/delete-user?_method=DELETE" method="POST">
+            <div>
+                <input type="email" id="name" placeholder="Enter email of user.." name="email" required>
+            </div>
+            <div>
+                <button type="submit">Delete</button>
+                <button onclick="hideForm('deleteUser')">Cancel</button>
+            </div>
+        </form>
+    </div>
+    <div>
+        <button onclick="showForm('deleteTransaction')">Delete a transaction</button>
+        <form id="deleteTransaction" style="display: none;" action="/delete-transaction?_method=DELETE" method="POST">
+            <div>
+                <input type="text" id="name" placeholder="Enter name of transaction.." name="name" required>
+            </div>
+            <div>
+                <button type="submit">Delete</button>
+                <button onclick="hideForm('deleteTransaction')">Cancel</button>
             </div>
         </form>
     </div>

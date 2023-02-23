@@ -133,6 +133,30 @@ app.delete('/delete-group-expense', checkAuthenticated, async (req, res) => {
     res.redirect('/group-expenses');
 })
 
+app.delete('/delete-user', checkAuthenticated, async (req, res) => {
+    await Group_Expense.updateOne(
+        {_id: req.body.groupExpenseId},
+        {
+            $pull: {users: {
+                email: req.body.email
+                }}
+        })
+
+    res.redirect('/group-expenses');
+})
+
+app.delete('/delete-transaction', checkAuthenticated, async (req, res) => {
+    await Group_Expense.updateOne(
+        {_id: req.body.groupExpenseId},
+        {
+            $pull: {transactions: {
+                    name: req.body.name
+                }}
+        })
+
+    res.redirect('/group-expenses');
+})
+
 function checkAuthenticated(req, res, next) {
     if (req.isAuthenticated()) {
         return next()
