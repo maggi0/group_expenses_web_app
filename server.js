@@ -93,17 +93,16 @@ app.delete('/logout', (req, res, next) => {
 app.post('/add-group-expense', checkAuthenticated, async (req, res) => {
     const group_expense = await Group_Expense.create({
         name: req.body.name,
-        users: [req.user.name]
+        users: [req.user.email]
     })
     res.redirect('/group-expenses')
 })
 
 app.post('/add-user', checkAuthenticated, async (req, res) => {
-    const user = User.findOne({email: req.body.email});
     await Group_Expense.updateOne(
         {_id: req.body.groupExpenseId},
         {
-            $push: {users: user.name}
+            $push: {users: req.body.email}
         })
 
     res.redirect('/group-expenses');
@@ -136,11 +135,8 @@ app.delete('/delete-group-expense', checkAuthenticated, async (req, res) => {
 app.delete('/delete-user', checkAuthenticated, async (req, res) => {
     await Group_Expense.updateOne(
         {_id: req.body.groupExpenseId},
-        {
-            $pull: {users: {
-                email: req.body.email
-                }}
-        })
+        {$pull: {users: req.body.email}}
+    );
 
     res.redirect('/group-expenses');
 })
@@ -149,9 +145,11 @@ app.delete('/delete-transaction', checkAuthenticated, async (req, res) => {
     await Group_Expense.updateOne(
         {_id: req.body.groupExpenseId},
         {
-            $pull: {transactions: {
+            $pull: {
+                transactions: {
                     name: req.body.name
-                }}
+                }
+            }
         })
 
     res.redirect('/group-expenses');

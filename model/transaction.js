@@ -8,7 +8,6 @@ var Transaction = new Schema({
     },
     name: {
         type: String,
-        unique: true,
         required: true
     },
     cost: {

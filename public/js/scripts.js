@@ -55,10 +55,20 @@ function calculateBalances(group_expense) {
         const costPerPerson = cost / transaction.people.length;
         transaction.people.forEach(function (person) {
             if(person === transaction.lender) {
-                balances.set(person, cost - costPerPerson);
+                if(balances.has(person)) {
+                    balances.set(person, balances.get(person) + cost - costPerPerson);
+                }
+                else {
+                    balances.set(person, cost - costPerPerson);
+                }
             }
             else {
-                balances.set(person, -costPerPerson);
+                if(balances.has(person)) {
+                    balances.set(person, balances.get(person) - costPerPerson)
+                }
+                else {
+                    balances.set(person, -costPerPerson);
+                }
             }
         })
     })
@@ -90,7 +100,7 @@ function calculateOptimalTransfers(balances) {
 
         let amount = Math.min(Math.abs(firstBorrowerValue), Math.abs(firstLenderValue));
 
-        transfers.push(firstBorrowerKey + " " + firstLenderKey + " " + amount);
+        transfers.push(firstBorrowerKey + " " + firstLenderKey + " " + Math.round(amount * 100) / 100);
 
         sortedBorrowers.set(firstBorrowerKey, firstBorrowerValue + amount);
         sortedLenders.set(firstLenderKey, firstLenderValue - amount);
