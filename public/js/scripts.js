@@ -5,13 +5,44 @@ function hideForm(formId) {
     document.getElementById(formId).style.display = 'none';
 }
 
-function addInfo(text) {
-    let info = document.createElement("p");
+function addInfo(text, element, parentElement) {
+    let info = document.createElement(element);
     info.innerHTML = text;
-    document.getElementById("group-expense-info").append(info);
+    document.getElementById(parentElement).append(info);
+}
+
+function addTransactionInfoButton(text, parentElement) {
+    let info = document.createElement("button");
+    info.onclick = function() {
+        console.log(text);
+        let elements = document.getElementsByClassName(text);
+        for (let i = 0; i < elements.length; i++) {
+            if (elements[i].style.display === 'none') {
+                elements[i].style.display = '';
+            }
+            else {
+                elements[i].style.display = 'none';
+            }
+        }
+    };
+    info.className = "trans-button";
+    info.innerHTML = text;
+    document.getElementById(parentElement).append(info);
+}
+
+function addTransactionInfo(text, element, button, parentElement) {
+    let info = document.createElement(element);
+    info.className = button;
+    info.innerHTML = text;
+    info.style.display = 'none';
+    info.style.backgroundColor = '#BDF4F8';
+    document.getElementById(parentElement).append(info);
 }
 
 window.showGroupExpense = function showGroupExpense(group_expense) {
+    addInfo("Users", "h2", "group-expense-users");
+    addInfo("Transactions", "h2", "group-expense-transactions");
+    addInfo("Transfers", "h2", "group-expense-transfers");
     group_expense = JSON.parse(decodeURIComponent(group_expense));
     updateForm(group_expense._id, "addUser");
     updateForm(group_expense._id, "addTransaction");
@@ -19,18 +50,18 @@ window.showGroupExpense = function showGroupExpense(group_expense) {
     updateForm(group_expense._id, "deleteTransaction");
     document.getElementById("main-menu").style.display = "none";
     document.getElementById("group-expense-menu").style.display = "";
-    addInfo("Name: " + group_expense.name);
-    addInfo("Users in this group expense: " + JSON.stringify(group_expense.users));
+    for (let i = 0; i < group_expense.users.length; i++) {
+        addInfo(group_expense.users[i], "p", "group-expense-users");
+    }
     if(group_expense.transactions.length === 0) {
-        addInfo("No transactions");
+        addInfo("No transactions", "p", "group-expense-transactions");
     }
     else {
-        addInfo("===== Transactions =====");
         group_expense.transactions.forEach(function (transaction) {
-            addInfo("name: " + transaction.name);
-            addInfo("people: " + transaction.people);
-            addInfo("cost: " + transaction.cost);
-            addInfo("lender: " + transaction.lender);
+            addTransactionInfoButton(transaction.name, "group-expense-transactions");
+            addTransactionInfo("people: " + transaction.people, "p", transaction.name, "group-expense-transactions");
+            addTransactionInfo("cost: " + transaction.cost, "p", transaction.name, "group-expense-transactions");
+            addTransactionInfo("lender: " + transaction.lender, "p", transaction.name, "group-expense-transactions");
         })
     }
     calculateOptimalTransfers(calculateBalances(group_expense));
@@ -113,9 +144,8 @@ function calculateOptimalTransfers(balances) {
         }
     }
 
-    addInfo("===== Transfers =====");
     transfers.forEach(function (transfer) {
         let arr = transfer.split(" ");
-        addInfo(arr[0] + " should pay " + arr[2] + "$ to " + arr[1]);
+        addInfo(arr[0] + " should pay " + arr[2] + "$ to " + arr[1], "p", "group-expense-transfers");
     })
 }

@@ -8,13 +8,16 @@
 </head>
 <body>
 <div id="main-menu">
-    <% group_expenses.forEach(function (group_expense) { %>
+    <h1>Group expenses</h1>
     <div>
-        <button onclick="showGroupExpense('<%= encodeURIComponent(JSON.stringify(group_expense)) %>')"><%= group_expense.name %></button>
+        <% group_expenses.forEach(function (group_expense) { %>
+    </div>
+    <div>
+        <button class="blue" onclick="showGroupExpense('<%= encodeURIComponent(JSON.stringify(group_expense)) %>')"><%= group_expense.name %></button>
     </div>
     <% }) %>
     <div>
-        <button onclick="showForm('addGroupExpenseForm')">Add a new group expense</button>
+        <button class="green" onclick="showForm('addGroupExpenseForm')">Add a new group expense</button>
         <form id="addGroupExpenseForm" style="display: none;" action="/add-group-expense" method="POST">
             <div>
                 <input type="text" id="name" placeholder="Enter name..." name="name" required>
@@ -24,9 +27,7 @@
                 <button onclick="hideForm('addGroupExpenseForm')">Cancel</button>
             </div>
         </form>
-    </div>
-    <div>
-        <button onclick="showForm('deleteGroupExpenseForm')">Delete a group expense</button>
+        <button class="red" onclick="showForm('deleteGroupExpenseForm')">Delete a group expense</button>
         <form id="deleteGroupExpenseForm" style="display: none;" action="/delete-group-expense?_method=DELETE" method="POST">
             <div>
                 <input type="text" id="name" placeholder="Enter name..." name="name" required>
@@ -37,14 +38,18 @@
             </div>
         </form>
     </div>
-        <div>
-            <button onclick="location.href='/';">Go to home page</button>
-        </div>
+    <div>
+        <button onclick="location.href='/';">Go to home page</button>
+    </div>
 </div>
-<div id="group-expense-info"></div>
+<div style="text-align: center" id="group-expense-info">
+    <div style="display: inline-block; margin: 25px 25px; vertical-align: top;" id="group-expense-users"></div>
+    <div style="display: inline-block; margin: 25px 25px; vertical-align: top;" id="group-expense-transactions"></div>
+    <div style="display: inline-block; margin: 25px 25px; vertical-align: top;" id="group-expense-transfers"></div>
+</div>
 <div id="group-expense-menu" style="display: none">
     <div>
-        <button onclick="showForm('addUser')">Add a new user</button>
+        <button class="green" onclick="showForm('addUser')">Add a new user</button>
         <form id="addUser" style="display: none;" action="/add-user" method="POST">
             <div>
                 <input type="email" id="name" placeholder="Enter email of user.." name="email" required>
@@ -54,9 +59,19 @@
                 <button onclick="hideForm('addUser')">Cancel</button>
             </div>
         </form>
+        <button class="red" onclick="showForm('deleteUser')">Delete a user</button>
+        <form id="deleteUser" style="display: none;" action="/delete-user?_method=DELETE" method="POST">
+            <div>
+                <input type="email" id="name" placeholder="Enter email of user.." name="email" required>
+            </div>
+            <div>
+                <button type="submit">Delete</button>
+                <button onclick="hideForm('deleteUser')">Cancel</button>
+            </div>
+        </form>
     </div>
     <div>
-        <button onclick="showForm('addTransaction')">Add a new transaction</button>
+        <button class="green" onclick="showForm('addTransaction')">Add a new transaction</button>
         <form id="addTransaction" style="display: none;" action="/add-transaction" method="POST">
             <div>
                 <input type="text" id="people" placeholder="Enter people participating in transaction.." name="people" required>
@@ -75,21 +90,7 @@
                 <button onclick="hideForm('addTransaction')">Cancel</button>
             </div>
         </form>
-    </div>
-    <div>
-        <button onclick="showForm('deleteUser')">Delete a user</button>
-        <form id="deleteUser" style="display: none;" action="/delete-user?_method=DELETE" method="POST">
-            <div>
-                <input type="email" id="name" placeholder="Enter email of user.." name="email" required>
-            </div>
-            <div>
-                <button type="submit">Delete</button>
-                <button onclick="hideForm('deleteUser')">Cancel</button>
-            </div>
-        </form>
-    </div>
-    <div>
-        <button onclick="showForm('deleteTransaction')">Delete a transaction</button>
+        <button class="red" onclick="showForm('deleteTransaction')">Delete a transaction</button>
         <form id="deleteTransaction" style="display: none;" action="/delete-transaction?_method=DELETE" method="POST">
             <div>
                 <input type="text" id="name" placeholder="Enter name of transaction.." name="name" required>

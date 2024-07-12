@@ -8,9 +8,11 @@
 <body>
 
 <h1>Login</h1>
-<% if (messages.error) { %>
-    <%= messages.error %>
-<% } %>
+<div style="color: #D4462B">
+    <% if (messages.error) { %>
+        <%= messages.error %>
+    <% } %>
+</div>
 <form action="/login" method ="POST">
     <div>
         <input type="email" id="email" placeholder="Enter email..." name="email" required>
